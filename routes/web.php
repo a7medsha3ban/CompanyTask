@@ -17,48 +17,45 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::middleware('is_admin')->group(function (){
     //route to controller function which returns all employees
     Route::get('/employees/list','EmployeeController@list');
 
-//route to controller function which returns the employee with specific id
-    Route::get('/employees/show/{id}','EmployeeController@show');
-//route to function to return create employee form
+    //route to function to return create employee form
     Route::get('/employees/create','EmployeeController@create');
 
-//route to function to add employee
+    //route to function to add employee
     Route::post('/employees/add','EmployeeController@add');
 
-//route to function to return create edit employee form
-    Route::get('/employees/edit/{id}','EmployeeController@edit');
-
-//route to function to update employee
+    //route to function to update employee
     Route::post('/employees/update/{id}','EmployeeController@update');
 
-//route to controller function to delete employee
+    //route to controller function to delete employee
     Route::get('employees/delete/{id}','EmployeeController@delete');
 
-//route to controller function which returns all companies
+    //route to controller function which returns all companies
     Route::get('/companies/list','CompanyController@list');
 
-//route to controller function which returns the company with specific id
+    //route to controller function which returns the company with specific id
     Route::get('/companies/show/{id}','CompanyController@show');
 
-//route to function to return create company form
+    //route to function to return create company form
     Route::get('/companies/create','CompanyController@create');
 
-//route to function to add company
+    //route to function to add company
     Route::post('/companies/add','CompanyController@add');
 
-//route to function to return create edit company form
+    //route to function to return create edit company form
     Route::get('/companies/edit/{id}','CompanyController@edit');
 
-//route to function to update company
+    //route to function to update company
     Route::post('/companies/update/{id}','CompanyController@update');
 
-//route to controller function to delete company
+    //route to controller function to delete company
     Route::get('companies/delete/{id}','CompanyController@delete');
-// Route to admin dashboard
+
+    // Route to admin dashboard
     Route::get('admin/dashboard','adminController@dashboard');
 });
 
@@ -77,13 +74,19 @@ Route::post('handle-login','AuthController@handleLogin');
 
 //middleware to check if user is logged in
 Route::middleware('is_login')->group(function (){
-// Route to logout
-Route::get('logout','AuthController@logout');
+    //route to function to return create edit employee form
+    Route::get('/employees/edit/{id}','EmployeeController@edit');
+
+    //route to controller function which returns the employee with specific id
+    Route::get('/employees/show/{id}','EmployeeController@show');
+
+    // Route to logout
+    Route::get('logout','AuthController@logout');
 });
 
 //middleware to check if user is employee
 Route::middleware('is_employee')->group(function (){
-// Route to logout
+    // Route to logout
     Route::get('home','EmployeeController@home');
 });
 

@@ -31,14 +31,26 @@ class EmployeeController extends Controller
     }
 
     //function to show employee with a specific id
-    public function show($id){
+    public function show($id,Request $request){
 
 //      $employee=User::where('id','=',$id)->first();
         $employee=User::find($id);
-        if($employee){
-            return view('employees.showEmployee',[
-                'employee' => $employee,
-            ]);
+        if($employee) {
+            if (Auth::user()->is_admin == 0) {
+                if ($request->id == Auth::user()->id) {
+                    return view('employees.showEmployee', [
+                        'employee' => $employee,
+                    ]);
+                }
+                else {
+                    return view('errors.404');
+                }
+            }
+            else{
+                return view('employees.showEmployee', [
+                    'employee' => $employee,
+                ]);
+            }
         }
     }
 
@@ -81,11 +93,23 @@ class EmployeeController extends Controller
     }
 
     //function to return edit company
-    public function edit($id){
+    public function edit($id,Request $request){
         $employee=User::find($id);
-        return view('employees.editEmployee',[
-            'employee'=> $employee
-        ]);
+        if(Auth::user()->is_admin == 0){
+            if($request->id == Auth::user()->id){
+                return view('employees.editEmployee',[
+                    'employee'=> $employee
+                ]);
+            }
+            else{
+                return view('errors.404');
+            }
+        }
+        else{
+            return view('employees.showEmployee', [
+                'employee' => $employee,
+            ]);
+        }
     }
 
     //function to update employee
