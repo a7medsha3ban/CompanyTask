@@ -140,6 +140,7 @@ class EmployeeController extends Controller
     //function to delete employee
     public function delete($id){
         $employee=User::find($id);
+        $employee->company()->detach();
         $employee->delete();
         return redirect('employees/list');
     }

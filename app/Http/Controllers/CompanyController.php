@@ -102,6 +102,8 @@ class CompanyController extends Controller
     //function to delete company
     public function delete($id){
         $company=Company::find($id);
+        $users=User::where('company_id','=',$id);
+        $users->delete();
         $company->delete();
         return redirect('companies/list');
     }
